@@ -28,9 +28,16 @@ public abstract class OAHashTable implements IHashTable {
 	
 	@Override
 	public void Insert(HashTableElement hte) throws TableIsFullException,KeyAlreadyExistsException {
+		if (Find(hte.GetKey()) != null) {
+			throw new KeyAlreadyExistsException(hte);
+		}
 		for (int i=0; i<this.len; i++) {
 			int j = Hash(hte.GetKey(), i);
-			if (this.table[j] == null || this.table[j] == deleted) {
+			if (this.table[j] == null) {
+				this.table[j] = hte;
+				return;
+			}
+			if (this.table[j] == deleted) {
 				this.table[j] = hte;
 				return;
 			}
@@ -46,13 +53,14 @@ public abstract class OAHashTable implements IHashTable {
 	public void Delete(long key) throws KeyDoesntExistException {
 		for (int i=0; i<this.len; i++) {
 			int j=Hash(key, i);
+			if (this.table[j] == null) {
+				throw new KeyDoesntExistException(key);
+			}
 			if (this.table[j].GetKey() == key){
 				this.table[j] = this.deleted;
 				return;
 			}
-			if (this.table[j] == null) {
-				throw new KeyDoesntExistException(key);
-			}
+
 		}
 		throw new KeyDoesntExistException(key);
 	}

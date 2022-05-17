@@ -7,10 +7,10 @@ public class ModHash {
 	public long p;
 
 	public ModHash(int m, long p, int a, int b){
-		this.a =0 ;
-		this.b =0;
-		this.m =0;
-		this.p =0;
+		this.a=a;
+		this.b=b;
+		this.m =m;
+		this.p =p;
 
 	}
 
@@ -22,9 +22,8 @@ public class ModHash {
 	}
 	
 	public int Hash(long key) {
-		ModHash h = GetFunc(this.m, this.p);
 
-		int i = (int) (((this.a*key + this.b)%this.m)%this.p);
+		int i = (int) (((a*key + b)%p)%m);
 		return i;
 	}
 }
