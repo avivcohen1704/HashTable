@@ -10,7 +10,14 @@ public class AQPHashTable extends OAHashTable {
 	
 	@Override
 	public int Hash(long x, int i) {
-		int index = (int) (((h.Hash(x) + Math.pow(-1,i)*i*i) % h.m)+h.m)% h.m;
+		int sign;
+		if (i%2==0){
+			sign=1;
+		}
+		else{
+			sign=-1;
+		}
+		int index = (int) (((h.Hash(x) + sign*i*i) % h.m)+h.m)% h.m;
 		return index;
 	}
 }
